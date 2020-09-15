@@ -1,10 +1,16 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 
-const SignIn: React.FC = () => (
-  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    <Text style={{ color: '#fff' }}>SignIn</Text>
-  </View>
-);
+import { Container, Title } from './styles';
+
+const SignIn: React.FC = () => {
+  return (
+    <Container>
+      <View>
+        <Title>Faça seu logon</Title>
+      </View>
+    </Container>
+  );
+};
 
 export default SignIn;
