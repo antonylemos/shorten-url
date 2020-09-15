@@ -2,17 +2,15 @@
 
 ## 🚀 Tecnologias utilizadas
 
-As principais tecnologias utilizadas para a construção dessa API foram:
+As principais tecnologias utilizadas para a construção desse APP foram:
 
 - [React Native](https://reactnative.dev/)
 - [React Navigation](https://reactnavigation.org/)
+- [styled-components](https://styled-components.com/)
 
 ## 📦 Como baixar e executar?
 
-**Antes de baixar e executar o projeto**, é necessário ter o **Node.js** já instalado e, em seguida, instalar as seguintes ferramentas:
-
-- [Git](https://git-scm.com/)
-- [Yarn](https://classic.yarnpkg.com/lang/en/)
+**Antes de baixar e executar o projeto**, é necessário configurar todo o **[Ambiente React Native](https://react-native.rocketseat.dev/)**.
 
 ### ⬇️ Baixando o projeto
 
