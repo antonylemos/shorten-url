@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Linking } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import { useNavigation } from '@react-navigation/native';
 import BottomSheet from 'reanimated-bottom-sheet';
 
 import { useAuth } from '../../hooks/auth';
@@ -15,8 +14,7 @@ import {
   Header,
   HeaderTitle,
   UserName,
-  ProfileButton,
-  UserAvatar,
+  LogoutButton,
   UrlsList,
   UrlsListContainer,
   UrlsListTitle,
@@ -39,15 +37,13 @@ export interface Url {
 
 const Dashboard: React.FC = () => {
   const [urls, setUrls] = useState<Url[]>([]);
-  const [isActive, setIsActive] = useState(false);
 
   const sheetRef = useRef<BottomSheet>(null);
 
-  const { user } = useAuth();
-  const { navigate } = useNavigation();
+  const { user, signOut } = useAuth();
 
   useEffect(() => {
-    sheetRef.current?.snapTo(1);
+    sheetRef.current?.snapTo(2);
   }, []);
 
   useEffect(() => {
@@ -72,14 +68,6 @@ const Dashboard: React.FC = () => {
     [urls],
   );
 
-  // const navigateToProfile = useCallback(() => {
-  //   navigate('Profile');
-  // }, [navigate]);
-
-  // const navigateToShortenUrl = useCallback(() => {
-  //   navigate('ShortenUrl');
-  // }, [navigate]);
-
   return (
     <>
       <Container>
@@ -90,13 +78,9 @@ const Dashboard: React.FC = () => {
             <UserName>{user.name}</UserName>
           </HeaderTitle>
 
-          <ProfileButton onPress={() => {}}>
-            <UserAvatar
-              source={{
-                uri: 'https://api.adorable.io/avatars/285/abott@adorable.png',
-              }}
-            />
-          </ProfileButton>
+          <LogoutButton onPress={signOut}>
+            <Icon name="log-out" size={30} color="#f2a365" />
+          </LogoutButton>
         </Header>
 
         <UrlsList
@@ -105,7 +89,7 @@ const Dashboard: React.FC = () => {
           ListHeaderComponent={() => (
             <UrlsListContainer>
               <UrlsListTitle>Urls</UrlsListTitle>
-              <UrlsListButton onPress={() => sheetRef.current?.snapTo(0)}>
+              <UrlsListButton onPress={() => sheetRef.current?.snapTo(1)}>
                 <Icon name="plus" size={20} color="#222831" />
               </UrlsListButton>
             </UrlsListContainer>
@@ -147,7 +131,7 @@ const Dashboard: React.FC = () => {
 
       <BottomSheet
         ref={sheetRef}
-        snapPoints={[300, 0]}
+        snapPoints={[450, 300, 0]}
         borderRadius={10}
         initialSnap={1}
         renderContent={() => (
