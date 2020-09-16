@@ -37,11 +37,6 @@ export const UserAvatar = styled.Image`
   border-radius: 28px;
 `;
 
-export const UrlsList = styled(FlatList as new () => FlatList<Url>)`
-  height: 50px;
-  padding: 32px 24px 16px;
-`;
-
 export const UrlsListContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
@@ -62,6 +57,10 @@ export const UrlsListButton = styled(RectButton)`
   border-radius: 10px;
   justify-content: center;
   align-items: center;
+`;
+
+export const UrlsList = styled(FlatList as new () => FlatList<Url>)`
+  padding: 32px 24px 16px;
 `;
 
 export const UrlContainer = styled.View`
@@ -97,7 +96,7 @@ export const UrlMetaText = styled.Text`
 `;
 
 export const UrlActionButton = styled(RectButton)`
-  height: 100%;
+  height: 72px;
   width: 40px;
   border-radius: 10px;
   background: #ff4b5c;
