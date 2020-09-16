@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import {
   KeyboardAvoidingView,
   ScrollView,
@@ -32,6 +32,8 @@ const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const navigation = useNavigation();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const loginInputRef = useRef<TextInput>(null);
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
@@ -39,6 +41,8 @@ const SignUp: React.FC = () => {
   const handleSignUp = useCallback(
     async (data: SignUpFormData) => {
       try {
+        setIsLoading(true);
+
         formRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
@@ -68,6 +72,8 @@ const SignUp: React.FC = () => {
           'Você já pode fazer logon na aplicação.',
         );
 
+        setIsLoading(false);
+
         navigation.goBack();
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
@@ -82,6 +88,8 @@ const SignUp: React.FC = () => {
           'Erro no cadastro',
           'Ocorreu um erro ao fazer cadastro, tente novamente.',
         );
+
+        setIsLoading(false);
       }
     },
     [navigation],
@@ -152,7 +160,7 @@ const SignUp: React.FC = () => {
               />
 
               <Button onPress={() => formRef.current?.submitForm()}>
-                Cadastrar
+                {isLoading ? 'Carregando...' : 'Cadastrar'}
               </Button>
             </Form>
           </Container>

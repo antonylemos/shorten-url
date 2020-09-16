@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import {
   KeyboardAvoidingView,
   ScrollView,
@@ -22,8 +22,6 @@ import Button from '../../components/Button';
 import {
   Container,
   Title,
-  ForgotPassword,
-  ForgotPasswordText,
   CreateAccountButton,
   CreateAccountButtonText,
 } from './styles';
@@ -37,6 +35,8 @@ const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigation = useNavigation();
 
   const { signIn } = useAuth();
@@ -44,6 +44,8 @@ const SignIn: React.FC = () => {
   const handleSignIn = useCallback(
     async (data: SignInFormData) => {
       try {
+        setIsLoading(true);
+
         formRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
@@ -72,6 +74,8 @@ const SignIn: React.FC = () => {
           'Erro na autenticação',
           'Ocorreu um erro ao fazer logon, cheque as credenciais.',
         );
+
+        setIsLoading(false);
       }
     },
     [signIn],
@@ -119,17 +123,9 @@ const SignIn: React.FC = () => {
                   formRef.current?.submitForm();
                 }}
               >
-                Entrar
+                {isLoading ? 'Carregando...' : 'Entrar'}
               </Button>
             </Form>
-
-            <ForgotPassword
-              onPress={() => {
-                console.log('ok');
-              }}
-            >
-              <ForgotPasswordText>Esqueci minha senha</ForgotPasswordText>
-            </ForgotPassword>
           </Container>
         </ScrollView>
       </KeyboardAvoidingView>

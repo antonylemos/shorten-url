@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { TextInput, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import * as Yup from 'yup';
@@ -17,7 +17,7 @@ import { Container, Title } from './styles';
 import api from '../../services/api';
 
 interface BottomSheetProps {
-  handleAddUrl(url: any): void;
+  handleAddUrl(url: Record<string, unknown>): void;
 }
 
 interface UrlFormData {
@@ -28,11 +28,15 @@ const BottomSheetContainer: React.FC<BottomSheetProps> = ({ handleAddUrl }) => {
   const formRef = useRef<FormHandles>(null);
   const urlInputRef = useRef<TextInput>(null);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const { user } = useAuth();
 
   const handleShortenUrl = useCallback(
     async (data: UrlFormData) => {
       try {
+        setIsLoading(true);
+
         formRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
@@ -61,6 +65,8 @@ const BottomSheetContainer: React.FC<BottomSheetProps> = ({ handleAddUrl }) => {
         handleAddUrl(url.data);
 
         Alert.alert('URL encurtada com sucesso!');
+
+        setIsLoading(false);
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -74,6 +80,8 @@ const BottomSheetContainer: React.FC<BottomSheetProps> = ({ handleAddUrl }) => {
           'Erro ao adicionar URL',
           'Ocorreu um erro ao adicionar URL, tente novamente.',
         );
+
+        setIsLoading(false);
       }
     },
     [user.id, handleAddUrl],
@@ -104,7 +112,7 @@ const BottomSheetContainer: React.FC<BottomSheetProps> = ({ handleAddUrl }) => {
             formRef.current?.submitForm();
           }}
         >
-          Adicionar
+          {isLoading ? 'Carregando...' : 'Adicionar'}
         </Button>
       </Form>
     </Container>
