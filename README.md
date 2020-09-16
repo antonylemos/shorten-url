@@ -1,5 +1,12 @@
 # Shorten URL ⚡
 
+![](docs/1.jpg)  |  ![](docs/2.jpg) |  ![](docs/3.jpg)  |  ![](docs/4.jpg)  |
+:---------------:|:----------------:|:-----------------:|:-----------------:|
+
+## 🏷️ Sobre
+
+O **Shorten URL** é um aplicativo que encurta suas URLs. Faça seu cadastro, acesse sua conta e encurte quantas URLs quiser! Ah, você pode abrir elas no navegador diretamente pelo aplicativo.
+
 ## 🚀 Tecnologias utilizadas
 
 As principais tecnologias utilizadas para a construção desse APP foram:
@@ -7,6 +14,8 @@ As principais tecnologias utilizadas para a construção desse APP foram:
 - [React Native](https://reactnative.dev/)
 - [React Navigation](https://reactnavigation.org/)
 - [styled-components](https://styled-components.com/)
+- [Unform](https://unform.dev/)
+- [reanimated-bottom-sheet](https://github.com/osdnk/react-native-reanimated-bottom-sheet)
 
 ## 📦 Como baixar e executar?
 
