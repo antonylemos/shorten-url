@@ -64,9 +64,9 @@ export const UrlsList = styled(FlatList as new () => FlatList<Url>)`
 `;
 
 export const UrlContainer = styled.View`
-  background: #30475e;
+  background: #2b3742;
   border-radius: 10px;
-  padding: 20px;
+  padding: 16px;
   margin-bottom: 16px;
   flex-direction: row;
   align-items: center;
@@ -95,11 +95,14 @@ export const UrlMetaText = styled.Text`
   font-family: 'RobotoSlab-Regular';
 `;
 
+export const UrlActionButtonContainer = styled.View`
+  flex-direction: row;
+`;
+
 export const UrlActionButton = styled(RectButton)`
   height: 72px;
   width: 40px;
   border-radius: 10px;
-  background: #ff4b5c;
   justify-content: center;
   align-items: center;
 `;

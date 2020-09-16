@@ -17,7 +17,7 @@ import { Container, Title } from './styles';
 import api from '../../services/api';
 
 interface BottomSheetProps {
-  handleAddUrl(newUrl: any): void;
+  handleAddUrl(url: any): void;
 }
 
 interface UrlFormData {
@@ -56,9 +56,9 @@ const BottomSheetContainer: React.FC<BottomSheetProps> = ({ handleAddUrl }) => {
           data: date.toISOString(),
         };
 
-        await api.post('url', newUrl);
+        const url = await api.post('url', newUrl);
 
-        handleAddUrl(newUrl);
+        handleAddUrl(url.data);
 
         Alert.alert('URL encurtada com sucesso!');
       } catch (err) {
@@ -69,8 +69,6 @@ const BottomSheetContainer: React.FC<BottomSheetProps> = ({ handleAddUrl }) => {
 
           return;
         }
-
-        console.log(err);
 
         Alert.alert(
           'Erro ao adicionar URL',

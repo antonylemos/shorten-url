@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-
+import { Linking } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
 import BottomSheet from 'reanimated-bottom-sheet';
@@ -26,6 +26,7 @@ import {
   UrlName,
   UrlMeta,
   UrlMetaText,
+  UrlActionButtonContainer,
   UrlActionButton,
 } from './styles';
 
@@ -44,6 +45,10 @@ const Dashboard: React.FC = () => {
 
   const { user } = useAuth();
   const { navigate } = useNavigation();
+
+  useEffect(() => {
+    sheetRef.current?.snapTo(1);
+  }, []);
 
   useEffect(() => {
     api.get(`url/listar/${user.id}`).then(response => {
@@ -100,13 +105,7 @@ const Dashboard: React.FC = () => {
           ListHeaderComponent={() => (
             <UrlsListContainer>
               <UrlsListTitle>Urls</UrlsListTitle>
-              <UrlsListButton
-                onPress={() =>
-                  isActive
-                    ? sheetRef.current?.snapTo(1)
-                    : setIsActive(!isActive)
-                }
-              >
+              <UrlsListButton onPress={() => sheetRef.current?.snapTo(0)}>
                 <Icon name="plus" size={20} color="#222831" />
               </UrlsListButton>
             </UrlsListContainer>
@@ -127,9 +126,20 @@ const Dashboard: React.FC = () => {
                 </UrlMeta>
               </UrlInfo>
 
-              <UrlActionButton onPress={() => handleDeleteUrl(url.id)}>
-                <Icon name="trash" size={24} color="#222831" />
-              </UrlActionButton>
+              <UrlActionButtonContainer>
+                <UrlActionButton
+                  onPress={() => handleDeleteUrl(url.id)}
+                  style={{ marginRight: 8, backgroundColor: '#ff4b5c' }}
+                >
+                  <Icon name="trash" size={24} color="#222831" />
+                </UrlActionButton>
+                <UrlActionButton
+                  onPress={() => Linking.openURL(url.curta)}
+                  style={{ backgroundColor: '#f2a365' }}
+                >
+                  <Icon name="external-link" size={24} color="#222831" />
+                </UrlActionButton>
+              </UrlActionButtonContainer>
             </UrlContainer>
           )}
         />
@@ -137,11 +147,12 @@ const Dashboard: React.FC = () => {
 
       <BottomSheet
         ref={sheetRef}
-        snapPoints={[450, 300, 0]}
+        snapPoints={[300, 0]}
         borderRadius={10}
-        renderContent={() =>
-          isActive ? <BottomSheetContainer handleAddUrl={handleAddUrl} /> : null
-        }
+        initialSnap={1}
+        renderContent={() => (
+          <BottomSheetContainer handleAddUrl={handleAddUrl} />
+        )}
       />
     </>
   );
